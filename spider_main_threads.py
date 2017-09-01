@@ -4,27 +4,16 @@ import random
 import time
 import json
 import threading
-
 import queue
 
 
 
-
-
-
-    
-
-     
-
-
 def fst_page_urls(url):
-    
     req = request.Request(url)
     hds=['User-Agent,Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6',\
         'Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.12 Safari/535.11',\
-        'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)',\
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36']
-    hd=hds[random.randint(0,3)]
+        'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)']
+    hd=hds[random.randint(0,2)]
     req.add_header('User-Agent',hd)
     content = request.urlopen(req).read()
     content1 = content.decode()
@@ -34,20 +23,15 @@ def fst_page_urls(url):
         q.put(l['url'])
     
 
-
 def spider():
-    
-    url=q.get()
+   url=q.get()
     req = request.Request(url)
     hds=['User-Agent,Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6',\
         'Mozilla/5.0 (Windows NT 6.2) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.12 Safari/535.11',\
-        'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)',\
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36']
-    hd=hds[random.randint(0,3)]
+        'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)']
+    hd=hds[random.randint(0,2)]
     req.add_header('User-Agent',hd)
     cont = request.urlopen(req).read()
-    
-    
     soup = BeautifulSoup(cont,'html.parser',from_encoding='utf-8')
     page_date = {}
     page_date['pic'] = soup.find('div',id="mainpic",class_="").find('img')['src']
@@ -82,8 +66,7 @@ def spider():
     finally:
             
         lock.release()
-    
-    q.task_done() 
+   q.task_done() 
 
 
 def Html_output():
@@ -167,87 +150,25 @@ def Html_output():
     f.close
     
 
-    
-   
-
-
-   
-
-
-#     
-# 
-# def craw(fst_url):
-#    
-#     time_start=time.time()
-#    
-#     fst_page_urls(fst_url)
-#     
-#     threads_num = 3
-#     for i in range(threads_num):  
-#         t = threading.Thread(target=spider)
-#         t.start()
-#        
-#     share_q.join()  
-#     Html_output()
-#     time_end=time.time() 
-#     print(time_end-time_start)
-#     
+ 
 class MyThread(threading.Thread) :
-
-    def __init__(self, func) :
+   def __init__(self, func) :
         threading.Thread.__init__(self)   #调用父类的构造函数
         self.func = func  #传入线程函数逻辑
-
-    def run(self) :
+   def run(self) :
         while not q.empty():
             self.func()
         return    
        
-            
-            
-
-             
-        
-    
+  
 if __name__=='__main__': 
     fst_url='https://movie.douban.com/j/search_subjects?type=tv&tag=%E7%BE%8E%E5%89%A7&sort=time&page_limit=20&page_start=0'
-       
-   
     q=queue.Queue()
     cont_dates=[]
-    time_start=time.time()
-   
     fst_page_urls(fst_url)
-    
-        
     for i in range(6):  
         t = MyThread(spider)
-        
-        t.start()
+       t.start()
     q.join()  
-      
-     
     Html_output()
-    time_end=time.time() 
-    print(time_end-time_start)
-    
-     
-     
-
-
-    
-
-
-
-    
-
-   
-   
-     
-           
-        
-        
-        
-        
-    
-    
+  

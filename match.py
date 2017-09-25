@@ -41,7 +41,7 @@ def braca():
 def li_liga():
     liga = []        
     for i in [1,2]:
-        url = "http://www.dongqiudi.com/archives/5?page=i"
+        url = "http://www.dongqiudi.com/archives/5?page={0}".format(i)
         liga_news = news_spider(url,liga)
         liga_news.news()
     return liga

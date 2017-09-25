@@ -31,7 +31,7 @@ class news_spider(object):
 def braca():
     fcb = []        
     for i in [1,2]:
-        url = "https://www.dongqiudi.com/data/team/archive?team=50001756&page=i"
+        url = "https://www.dongqiudi.com/data/team/archive?team=50001756&page={0}".format(i)
         braca_news = news_spider(url,fcb)
         braca_news.news()
     return fcb
@@ -49,7 +49,8 @@ def li_liga():
 
 #昨，近，明所有重要赛事，赛况
 def rencent_match():
-    url = "http://www.dongqiudi.com/match/fetch_new?tab=null&date=2017-09-24&scroll_times=0&tz=-8"    
+    now = datetime.now().strftime('%Y-%m-%d')
+    url = "http://www.dongqiudi.com/match/fetch_new?tab=null&date={0}&scroll_times=0&tz=-8".format(now)    
     headers = {'Host':"www.dongqiudi.com",
                "Accept": "*/*",
                "Accept-Encoding": "gzip, deflate",

@@ -43,9 +43,12 @@ def load_data(data):
 if __name__=='__main__':
     l=[x*25 for x in range(10)]
     data=[]
+    threads = []
     for i in l:
         t = threading.Thread(target=download,args=(i,))
+        threads.append(t)
         t.start()
+    for t in threads:
         t.join()
     load_data(data)
 

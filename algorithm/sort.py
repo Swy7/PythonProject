@@ -46,7 +46,7 @@ def merge_sort(lst):
     right = merge_sort(lst[middle:])
     return merge(left, right)
 
-
+#用python collections库deque中的popleft来实现左边数字的比较
 def merge(left, right):
     merged, left, right = deque(), deque(left), deque(right)
     while left and right:
@@ -54,7 +54,7 @@ def merge(left, right):
     merged.extend(right if right else left)
     return merged
 
-
+#用python 数组i,j的变化来实现左边数字的比较
 # def merge(left, right):
 # 	i, j = 0, 0
 # 	merged = []
@@ -81,7 +81,7 @@ def quick_sort(lst, lo, hi):
     return lst
 
 
-# quick_sort(lst, 0, len(lst))
+# 使用时,第一次应用quick_sort(lst, 0, len(lst))调用,这里hi=len(lst)
 def partition(lst, lo, hi):
     pivot = lst[lo]
     i = lo
@@ -95,7 +95,7 @@ def partition(lst, lo, hi):
     return i
 
 
-# quick_sort(lst, 0, len(lst)-1)
+# 使用时,第一次应用quick_sort(lst, 0, len(lst)-1)调用,这里hi=len(lst)-1
 # def partition(lst, lo, hi):
 #     pivot = lst[lo]
 #     while lo < hi:

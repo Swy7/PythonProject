@@ -172,3 +172,102 @@ def getSay(pre_say):
                 next_say += (str(count + 1) + pre_say[i])
                 count = 0
         return next_say
+
+
+def maxSubArray(nums):
+    import sys
+    summ = 0
+    maxx = - sys.maxsize
+
+    for n in nums:
+        summ += n
+        if n > summ:
+            summ = n
+
+        if summ > maxx:
+            maxx = summ
+
+        elif summ < 0:
+            summ = 0
+
+    return maxx
+
+
+def lengthOfLastWord(s):
+    strip_s = s.strip()
+    return len(strip_s.split(' ')[-1])
+
+
+def plusOne(digits):
+    sums = int(''.join(list(map(str,digits)))) + 1
+    return list(map(int, list(str(sums))))
+
+def addBinary(a, b):
+    return bin(int(a, 2) + int(b, 2))[2:]
+
+
+# def climbStairs(n):
+#     if n == 1 or n == 0:
+#         return 1
+#     else:
+#         return climbStairs(n-1)+climbStairs(n-2)
+
+def climbStairs(n):
+    if n == 1:
+        return 1
+    if n == 2:
+        return 2
+    res = {1: 1, 2: 2}
+    for i in range(3, n + 1):
+        res[i] = res[i - 1] + res[i - 2]
+    return res[n]
+
+
+def deleteDuplicates(head):
+    p = head
+    while p:
+        if p.next and p.next.val == p.val:
+            p.next = p.next.next
+        else:
+            p = p.next
+    return head
+
+# def merge(nums1, m, nums2, n):
+#     new_nums1 = nums1[:m]
+#     new_nums2 = nums2[:n]
+#     if new_nums1 and new_nums2 == []:
+#         nums1 = new_nums1
+#         return
+#     elif new_nums2 and new_nums1 == []:
+#         nums1 = new_nums2
+#         return
+#     else:
+#         i = 0
+#         j = 0
+#         result = []
+#         while i<m and j<n:
+#             if new_nums1[i] < new_nums2[j]:
+#                 result.append(new_nums1[i])
+#                 i += 1
+#             else:
+#                 result.append(new_nums2[j])
+#                 j += 1
+#         if i < m:
+#             result.extend(new_nums1[i:])
+#         if j < n:
+#             result.extend(new_nums2[j:])
+#         nums1 = result
+#         return
+def merge(nums1, m, nums2, n):
+    while m > 0 and n > 0:
+        if nums1[m - 1] >= nums2[n - 1]:
+            nums1[m + n - 1] = nums1[m - 1]
+            m -= 1
+        else:
+            nums1[m + n - 1] = nums2[n - 1]
+            n -= 1
+    if n > 0:
+        nums1[:n] = nums2[:n]
+    return nums1
+print(merge([1,2,4,5,6,0],5,[3],1))
+
